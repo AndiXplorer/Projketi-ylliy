@@ -1,0 +1,155 @@
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Candidates</title>
+<link rel="stylesheet" href="VV.css">
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+<div class="nav1">
+    <img class="logo" src="./go-vote-presidential-election-typography-poster-usa-patriotic-sign-vector-template-banner-sticker-flyer-etc_656810-3902.avif" alt="">
+</div>
+
+<div class="body">
+    <div class="bodyleft">
+        <div class="box">
+            <div class="combo">
+                <img class="icon" src="./albin.jpg" alt="">
+                <div class="info">
+                    <p class="_titulli">Albin Kurti</p>
+                    <p class="premtimet">Kandidat per kryeministër</p>
+                </div>
+            </div>
+            <button class="vote" onclick="showVoteAlert('Albin Kurt')">Vote</button>
+        </div>
+
+        <div class="box">
+            <div class="combo">
+                <img class="icon" src="./images.jpg" alt="">
+                <div class="info">
+                    <p class="_titulli">Glauk Konjufca</p>
+                    <p class="premtimet">Kandidat per deputet</p>
+                </div>
+            </div>
+            <button class="vote" onclick="showVoteAlert('Glauk Konjufca')">Vote</button>
+        </div>
+
+        <div class="box">
+            <div class="combo">
+                <img class="icon" src="./donikaa.jpg" alt="">
+                <div class="info">
+                    <p class="_titulli">Donika Gërvalla</p>
+                    <p class="premtimet">Kandidat per depute</p>
+                </div>
+            </div>
+            <button class="vote" onclick="showVoteAlert('Donika Gërvalla')">Vote</button>
+        </div>
+    </div>
+
+    <div class="bodyright">
+        <div class="box">
+            <div class="combo">
+                <img class="icon" src="./13_Ms._Arberie_Nagavci.png" alt="">
+                <div class="info">
+                    <p class="_titulli">Arbërie Nagavci</p>
+                    <p class="premtimet">Kandidat per depute</p>
+                </div>
+            </div>
+            <button class="vote" onclick="showVoteAlert('Arbërie Nagavci')">Vote</button>
+        </div>
+
+        <div class="box">
+            <div class="combo">
+                <img class="icon" src="./Hekuran_Murati_-_portret,_Kuvendi_i_Kosovës.jpg" alt="">
+                <div class="info">
+                    <p class="_titulli">Hekuran Murati</p>
+                    <p class="premtimet">Kandidat per depute</p>
+                </div>
+            </div>
+            <button class="vote" onclick="showVoteAlert('Hekuran Murati')">Vote</button>
+        </div>
+
+        <div class="box">
+            <div class="combo">
+                <img class="icon" src="./mimoza.jpg" alt="">
+                <div class="info">
+                    <p class="_titulli">Mimoza Kusari-Lilai</p>
+                    <p class="premtimet">Kandidat per depute</p>
+                </div>
+            </div>
+            <button class="vote" onclick="showVoteAlert('Mimoza Kusari-Lila')">Vote</button>
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll(".vote");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", (event) => {
+            const candidateName = event.target.getAttribute("data-candidate");
+
+            if (localStorage.getItem("voted")) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops! Nice Try...',
+                    text: `You've already voted for ${localStorage.getItem("voted")}! Unfortunately, democracy isn't like a buffet—you can't go back for seconds!`,
+                    confirmButtonText: 'Alright, I Accept My Fate',
+                    background: '#FFFFFF',
+                    color: '#000000',
+                    confirmButtonColor: '#2575fc'
+                });
+            } else {
+                localStorage.setItem("voted", candidateName);
+                buttons.forEach(btn => btn.disabled = true);
+
+                // Trigger confetti animation
+                triggerConfetti();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Vote Cast Successfully!',
+                    text: `You have voted for ${candidateName}. Your voice has been heard!`,
+                    confirmButtonText: 'Close',
+                    background: '#FFFFFF',
+                    color: '#000000',
+                    confirmButtonColor: '#2575fc'
+                }).then(() => {
+                    location.reload(); // Reload the page after user clicks "Close"
+                });
+            }
+        });
+    });
+});
+
+// Confetti function
+function triggerConfetti() {
+    const count = 200;
+    const defaults = {
+        origin: { y: 0.7 },
+        colors: ['#2575fc', '#6a11cb', '#ffffff']
+    };
+
+    function fire(particleRatio, opts) {
+        confetti(Object.assign({}, defaults, opts, {
+            particleCount: Math.floor(count * particleRatio)
+        }));
+    }
+
+    fire(0.25, { spread: 26, startVelocity: 55 });
+    fire(0.2, { spread: 60 });
+    fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+    fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+    fire(0.1, { spread: 120, startVelocity: 45 });
+}
+
+
+
+    
+</script>
+</body>
+
+</html>
